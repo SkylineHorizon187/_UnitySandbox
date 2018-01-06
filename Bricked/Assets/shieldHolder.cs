@@ -9,7 +9,10 @@ public class shieldHolder : MonoBehaviour {
 
 	void Start() {
 		SH = this;
-	}
+        for (int i = 0; i < 3; i++) {
+            shieldHolder.SH.AddCharge();
+        }
+    }
 
 	public void AddCharge() {
 		Instantiate (shieldChargePrefab, transform);

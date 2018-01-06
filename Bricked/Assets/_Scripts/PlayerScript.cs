@@ -25,9 +25,6 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		currentHealth = playerHealth;
-		for (int i = 0; i < 3; i++) {
-			shieldHolder.SH.AddCharge ();
-		}
 	}
 
 	void Update () {
