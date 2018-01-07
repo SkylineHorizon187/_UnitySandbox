@@ -38,7 +38,7 @@ public class BrickSpawn : MonoBehaviour {
         GameTimer += Time.deltaTime;
         if (GameTimer >= 1) {
             GameTimer -= 1;
-            Score(10);
+            Score(1);
         }
 
 		timer += Time.deltaTime;

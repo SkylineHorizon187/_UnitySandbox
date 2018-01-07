@@ -12,8 +12,8 @@ public class PlayerScript : MonoBehaviour {
     public GameObject firePoint;
     public GameObject bulletPrefab;
     public GameObject playerDeath;
-    public int playerHealth;
-    public int currentHealth;
+    public float playerHealth;
+    public float currentHealth;
     public int bulletDamage;
     public Image healthGlobe;
     public GameObject shield;
@@ -94,6 +94,18 @@ public class PlayerScript : MonoBehaviour {
         rb.MovePosition(curPos + moveDir * moveSpeed * Time.fixedDeltaTime);
     }
 
+    public void TakeDamage(float amount) {
+        if (!isShielded) {
+            currentHealth -= amount;
+            UpdateHealthGlobe();
+            
+            if (currentHealth <= 0) {
+                KillPlayer();
+            }
+        }
+    }
+
+
     void OnCollisionEnter2D(Collision2D other) {
         if (!isShielded) {
             if (other.collider.tag == "Bullet") {
@@ -118,6 +130,6 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void UpdateHealthGlobe() {
-        healthGlobe.fillAmount = (float)currentHealth / (float)playerHealth;
+        healthGlobe.fillAmount = currentHealth / playerHealth;
     }
 }

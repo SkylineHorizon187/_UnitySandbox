@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 74908347}
   - component: {fileID: 74908346}
   - component: {fileID: 74908349}
+  - component: {fileID: 74908350}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Wall
@@ -295,6 +296,22 @@ MonoBehaviour:
     spawnChance: 0.2
     lastCheck: 0
   spawnRadius: 9
+--- !u!114 &74908350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 74908344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b0276e7f9665e4f839c14e79e9b131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PS_WarningPrefab: {fileID: 1024113898657668, guid: 133f753dea878104f857bba7d71c12b7,
+    type: 2}
+  PS_BulletsPrefab: {fileID: 1211316066453158, guid: c3278bdbc51c98f4e8786644822a5cea,
+    type: 2}
+  ThePlayer: {fileID: 757157764}
 --- !u!1 &110786817
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +598,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1378186008021418, guid: 3ef5ee5691a88fd42852f2a8124cc7aa,
     type: 2}
   playerDeath: {fileID: 122014, guid: 7376db443f9d6b148a482427a30fc6b0, type: 2}
-  playerHealth: 20
+  playerHealth: 20.5
   currentHealth: 0
   bulletDamage: 2
   healthGlobe: {fileID: 218813329}
