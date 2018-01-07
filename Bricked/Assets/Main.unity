@@ -292,7 +292,7 @@ MonoBehaviour:
     buffType: 3
     buffAmount: 0
     checkSeconds: 12
-    spawnChance: 0.5
+    spawnChance: 0.2
     lastCheck: 0
   spawnRadius: 9
 --- !u!1 &110786817
@@ -575,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b78d952a7c2e249bbbe0439dbf871d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 1
   moveSpeed: 5
   firePoint: {fileID: 1988759255}
   bulletPrefab: {fileID: 1378186008021418, guid: 3ef5ee5691a88fd42852f2a8124cc7aa,
@@ -596,9 +597,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 936070a21057e4d49854c5f2b449955e, type: 2}
   m_Interpolate: 0
@@ -931,7 +932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1247593912
 Transform:
   m_ObjectHideFlags: 0
@@ -940,7 +941,7 @@ Transform:
   m_GameObject: {fileID: 1247593911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.42, y: 0.42, z: 1}
   m_Children: []
   m_Father: {fileID: 757157767}
   m_RootOrder: 1

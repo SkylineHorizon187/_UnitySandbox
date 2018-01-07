@@ -17,6 +17,8 @@ public class BrickSpawn : MonoBehaviour {
 	private BrickScript BS;
 	private int gameScore;
 
+    private float GameTimer = 0f;
+
 	void Start () {
 		BSpawn = this;
 		InvokeRepeating ("IncreaseBrickHealth", 20f, 20f);
@@ -33,6 +35,12 @@ public class BrickSpawn : MonoBehaviour {
 	}
 	
 	void Update () {
+        GameTimer += Time.deltaTime;
+        if (GameTimer >= 1) {
+            GameTimer -= 1;
+            Score(10);
+        }
+
 		timer += Time.deltaTime;
 		if (timer >= spawnTime) {
 			timer -= spawnTime;
@@ -58,7 +66,9 @@ public class BrickSpawn : MonoBehaviour {
 	}
 
 	public void Score(int val) {
-		gameScore += val;
-		scoreText.text = "Score: " + gameScore;
+        if (PlayerScript.ThePlayer.isAlive) {
+            gameScore += val;
+            scoreText.text = "Score: " + gameScore;
+        }
 	}
 }
