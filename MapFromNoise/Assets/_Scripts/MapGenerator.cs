@@ -14,7 +14,6 @@ public class MapGenerator : MonoBehaviour {
 	public float offsetY;
 
 	private Texture2D tex;
-	private Color[] ca;
 	private Sprite s;
 	private SpriteRenderer sr;
 
@@ -24,24 +23,14 @@ public class MapGenerator : MonoBehaviour {
 		offsetY = Random.Range (0f, 999f);
 		sr = map.GetComponent<SpriteRenderer> ();
 
-		Noise.noiseMap = Noise.GenerateNoiseMap (mapWidth, mapHeight, noiseScale, offsetX, offsetY, density);
+		ColorMap.colorMap = ColorMap.GenerateColorMap (mapWidth, mapHeight, noiseScale, offsetX, offsetY, density);
 		GenerateMap ();
 	}
 
 	public void GenerateMap() {
 		tex = new Texture2D (mapWidth, mapHeight);
-		ca = new Color[mapWidth*mapHeight];
 
-		for (int y = 0; y < mapHeight; y++) {
-			for (int x = 0; x < mapWidth; x++) {
-				if (Noise.noiseMap[y * mapWidth + x] == 1) {
-					ca [y * mapWidth + x] = Color.white;	
-				} else {
-					ca [y * mapWidth + x] = Color.clear;
-				}
-			}
-		}
-		tex.SetPixels (ca);
+		tex.SetPixels (ColorMap.colorMap);
 		tex.Apply ();
 
 		s = Sprite.Create (tex, new Rect (0, 0, mapWidth, mapHeight), Vector2.zero, 1);
@@ -49,16 +38,7 @@ public class MapGenerator : MonoBehaviour {
 	}
 
 	public void UpdateMap() {
-		for (int y = 0; y < mapHeight; y++) {
-			for (int x = 0; x < mapWidth; x++) {
-				if (Noise.noiseMap[y * mapWidth + x] == 1) {
-					ca [y * mapWidth + x] = Color.white;	
-				} else {
-					ca [y * mapWidth + x] = Color.clear;
-				}
-			}
-		}
-		tex.SetPixels (ca);
+		tex.SetPixels (ColorMap.colorMap);
 		tex.Apply ();
 	}
 }

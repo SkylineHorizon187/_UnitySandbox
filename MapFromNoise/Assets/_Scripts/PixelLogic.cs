@@ -15,9 +15,9 @@ public class PixelLogic : MonoBehaviour {
 			for (int y = cx-r; y <= cx+r; y++) {
 				// test if in-circle
 				if ((y-cx)*(y-cx) + di2 <= r2) {
-					int pointInNoisemap = x * Noise.mapWidth + y;
-					if (pointInNoisemap >= 0 && pointInNoisemap < Noise.noiseMap.Length) {
-						Noise.noiseMap [x * Noise.mapWidth + y] = 0;
+					int colorMapIdx = x * ColorMap.mapWidth + y;
+					if (colorMapIdx >= 0 && colorMapIdx < ColorMap.colorMap.Length) {
+						ColorMap.colorMap [colorMapIdx] = Color.clear;
 					}
 				}
 			}
@@ -35,9 +35,9 @@ public class PixelLogic : MonoBehaviour {
 			for (int y = cx-r; y <= cx+r; y++) {
 				// test if in-circle
 				if ((y-cx)*(y-cx) + di2 <= r2) {
-					int pointInNoisemap = x * Noise.mapWidth + y;
-					if (pointInNoisemap >= 0 && pointInNoisemap < Noise.noiseMap.Length) {
-						if (Noise.noiseMap [pointInNoisemap] == 1)
+					int pointInNoisemap = x * ColorMap.mapWidth + y;
+					if (pointInNoisemap >= 0 && pointInNoisemap < ColorMap.colorMap.Length) {
+						if (ColorMap.colorMap [pointInNoisemap] == Color.white)
 							return true;
 					}
 				}
