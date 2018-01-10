@@ -4,28 +4,42 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
+    // Prefabs
     public GameObject DiskPrefab;
     public GameObject CrosshairPrefab;
 
-    private float MovementSpeed = 5f;
-
+    // Quick access to Components
+    private SpriteRenderer sr;
     private Rigidbody2D rb;
+
+    // Player Mouse Tracking
     private Vector2 MoveDirection;
     private Vector2 MouseMove;
     private GameObject Crosshair;
 
     //[HideInInspector]
     public int Ammo = 5;
-    private bool isCharging;
 
+    // Player Stats
+    [Range(1, 2)]
+    public int Team = 1;
+
+    public float HealthMax = 10f;
+    public float MovementSpeed = 5f;
     public float BasePower = 5f;
-    private float CurrentCharge;
     public float MaximumCharge = 20f;
     public float ChargeRate = 5f;
 
+    // Other Stuff
+    private bool isCharging;
+    private float CurrentCharge;
+    private float HealthCurrent;
+
     // Use this for initialization
     void Start() {
+        sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        HealthCurrent = HealthMax;
         Cursor.visible = false;
 
         Crosshair = Instantiate(CrosshairPrefab);
@@ -56,11 +70,14 @@ public class PlayerControls : MonoBehaviour {
                 isCharging = false;
                 Ammo -= 1;
 
+                // Create and set Disk properties
                 Vector3 DiskDirection = (Crosshair.transform.position - transform.position).normalized;
                 GameObject disk = Instantiate(DiskPrefab, transform.position + DiskDirection, Quaternion.identity);
-                Rigidbody2D drb = disk.GetComponent<Rigidbody2D>();
+                disk.GetComponent<SpriteRenderer>().color = sr.color;
+                disk.GetComponent<_Tags>().AddTag("Team" + Team);
+
                 Vector2 force = new Vector2(DiskDirection.x, DiskDirection.y) * (BasePower + CurrentCharge);
-                drb.AddForce(force, ForceMode2D.Impulse);
+                disk.GetComponent<DiskLogic>().SetForce(force);
             }
         }
         else {
@@ -83,6 +100,19 @@ public class PlayerControls : MonoBehaviour {
     }
 
 
+    public void TakeDamage(float value) {
+        HealthCurrent -= value;
+        CheckDead();
+    }
 
+    void CheckDead() {
+        if (HealthCurrent <= 0f) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void GetAmmo() {
+        Ammo += 1;
+    }
 
 }
