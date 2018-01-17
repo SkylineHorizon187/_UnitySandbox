@@ -23,6 +23,7 @@ public class Traps : MonoBehaviour {
         }
         Destroy(other.gameObject);
         Charges--;
+		GameController.score++;
         if(Charges < 1)
         {
             Destroy(gameObject);
