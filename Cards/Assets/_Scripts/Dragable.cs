@@ -8,12 +8,14 @@ public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 	public GameObject line;
 	public GameObject targetIcon;
 	public GameObject placeHolder;
+	public GameObject moveHolder;
 	[MaskEnum] public General.TargetTypes attackType;
 
 	private LineRenderer lr;
 	private Vector3 tmpVector;
 	private Image dragObject;
 	private List<RaycastResult> hits = new List<RaycastResult>();
+	private Outline o;
 
 	void Start() {
 		lr = line.GetComponent<LineRenderer> ();
@@ -84,7 +86,20 @@ public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 					}
 				}
 			} else {
-				transform.position = tmpVector;
+				if (dragObject.transform.parent != moveHolder.transform) {
+					dragObject.transform.SetParent (moveHolder.transform);
+					placeHolder.SetActive (false);
+					for (int i = 0; i < placeHolder.transform.parent.childCount; i++) {
+						o = placeHolder.transform.parent.GetChild (i).GetComponent<Outline> ();
+						if (o != null) {
+							if (o.enabled) {
+								placeHolder.transform.parent.GetChild (i).SetParent (moveHolder.transform);
+								i--;
+							}
+						}
+					}
+				}
+				moveHolder.transform.position = tmpVector;
 			}
 		}
 	}
