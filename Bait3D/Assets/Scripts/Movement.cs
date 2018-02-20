@@ -15,14 +15,12 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MoveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-    }
+        MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+	}
 
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + MoveDir * MoveSpeed * Time.fixedDeltaTime);
-        
-
     }
 
     public void OnCollisionEnter(Collision collision)
