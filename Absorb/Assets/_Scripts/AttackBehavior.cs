@@ -34,7 +34,7 @@ public class AttackBehavior {
             crit = true;
             damage *= 1 + data.criticalDamage/100f;
         }
-        return Mathf.Round(damage);
+        return damage;
     }
 
 }

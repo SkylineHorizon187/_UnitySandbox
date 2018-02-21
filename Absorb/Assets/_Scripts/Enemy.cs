@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour {
 		textPos.x += Random.Range (-5f, 5f);
 
 		Color txtColor = SpawnParticles.instance.colors [(int)typ];
-		ft.SetFloatingText (amt.ToString (), textPos , txtColor, 30, SpawnParticles.instance.mainCanvas, crit);
+		ft.SetFloatingText (amt.ToString ("F0"), textPos , txtColor, 30, SpawnParticles.instance.mainCanvas, crit);
 
 		currentHealth -= amt;
 		if (currentHealth > 0) {
@@ -64,6 +64,11 @@ public class Enemy : MonoBehaviour {
 			}
 			partSys.GetComponent<ParticleSystem> ().emission.SetBurst (0, pb);
 			Destroy (partSys, 16f);
+
+			// Check to see if a boss has been defeated
+			if (tag == "Boss") {
+				Global.instance.BossDefeated ();
+			}
 			Destroy (gameObject);
 		}
 	}

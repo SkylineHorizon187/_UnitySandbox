@@ -20,13 +20,13 @@ public class FloatingText : MonoBehaviour {
         if (crit)
         {
             size += 10;
-            text += '!';
+            text += " !!";
+			txtcomp.outlineWidth = .3f;
         }
 
         txtcomp.SetText (text);
 		txtcomp.faceColor = color;
 		txtcomp.fontSize = size;
-
         
 
 		isSet = true;

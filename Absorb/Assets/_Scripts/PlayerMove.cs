@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour {
 
                     // <--------------
                     bool crit;
-                    e.TakeDamage(attacks[i].DamageRoll(out crit), attacks[i].data.damageType, crit);
+					e.TakeDamage(attacks[i].DamageRoll(out crit)*multiplier, attacks[i].data.damageType, crit);
 					attacks [i].timer -= attacks [i].data.attackDelay;
 					if (i > 0) {
 						ConvertEssence.CE.meters [(int)attacks[i].data.damageType].attackTimer.fillAmount = attacks [i].timer / attacks [i].data.attackDelay;
@@ -146,7 +146,7 @@ public class PlayerMove : MonoBehaviour {
 		FloatingText ft = go.GetComponent<FloatingText> ();
 		Vector3 textPos = transform.position;
 		textPos.x += Random.Range (-5f, 5f);
-        ft.SetFloatingText(amt.ToString(), textPos, Color.grey, 30, SpawnParticles.instance.mainCanvas, false);
+		ft.SetFloatingText(amt.ToString("F0"), textPos, Color.grey, 30, SpawnParticles.instance.mainCanvas, false);
 	}
 
 	public void AddHealth(float amt) {
