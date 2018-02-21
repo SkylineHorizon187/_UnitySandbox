@@ -2996,6 +2996,13 @@ MonoBehaviour:
   floatingTextPrefab: {fileID: 1455793779278654, guid: 9f50f6ad26ca5e04cb70363bd7a756e9,
     type: 2}
   target: {fileID: 0}
+  attackList:
+  - {fileID: 11400000, guid: a2021a60c494fa54dbccbe99320c7596, type: 2}
+  - {fileID: 11400000, guid: c7ccb8fc04e9d6c42bbcccd827c6dc21, type: 2}
+  - {fileID: 11400000, guid: d306b47f908434b44ba9163c94641448, type: 2}
+  - {fileID: 11400000, guid: a6268abfdbc0b3d44a8985cb6dbf91fa, type: 2}
+  - {fileID: 11400000, guid: 2e40313f838c6c24ab6449ab58ce81b3, type: 2}
+  - {fileID: 11400000, guid: a9bde85beb3a5514fb0ee1fdd39b766c, type: 2}
 --- !u!23 &1062909647
 MeshRenderer:
   m_ObjectHideFlags: 0

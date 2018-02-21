@@ -9,12 +9,13 @@ public enum Element {
 public class Damage : MonoBehaviour {
 	public static Damage instance;
 	public float[,] ElementLookup = new float[,] {
-		{ 1f, 1f, 1f, 1f, 1f, 1f },
-		{ 1f, 1f, .75f, 1.75f, .5f, 1.5f  },
-		{ 1f, 1.75f, 1f, .5f,  1.5f, .75f },
-		{ 1f, 1.5f, 1.75f, 1f,  .75f, .5f },
-		{ 1f, .75f, .5f, 1.5f,  1f, 1.75f },
-		{ 1f, .5f, 1.5f, .75f,  1.75f, 1f }
+                 /*Basic     Fire        Earth       Water       Air         Lightning */
+		/*Basic*/{ 1f,       1f,         1f,         1f,         1f,         1f },
+		/*Fire*/ { 1f,       1f,         1.35f,      0.50f,      1.65f,      1.2f  },
+		/*Earth*/{ 1f,       0.85f,      1f,         1.25f,      0.85f,      1.75f },
+		/*Water*/{ 1f,       1.60f,      0.85f,      1f,         1.35f,      0.9f },
+		/*Air*/  { 1f,       0.95f,      1.6f,       1.3f,       1f,         0.85f },
+		/*Light*/{ 1f,       1.3f,       0.9f,       1.65f,      0.85f,      1f }
 	};
 
 	void Start() {

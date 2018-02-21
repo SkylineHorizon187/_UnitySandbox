@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6737f145d08c944482827e2185a9fd9, type: 3}
+  m_Name: Earth
+  m_EditorClassIdentifier: 
+  damageType: 2
+  attackEffectPrefab: {fileID: 1218187740169742, guid: 4b9c330bcb1ed924d96746ffbe3a82e9,
+    type: 2}
+  damageAmount: 18
+  damageRange: 4
+  attackDelay: 27
+  criticalChance: 16
+  criticalDamage: 85

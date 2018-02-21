@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void TakeDamage(float amt, Element typ) {
+	public void TakeDamage(float amt, Element typ, bool crit) {
 		hasBeenAttacked = true;
 
 		GameObject go = Instantiate (floatingTextPrefab);
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour {
 		textPos.x += Random.Range (-5f, 5f);
 
 		Color txtColor = SpawnParticles.instance.colors [(int)typ];
-		ft.SetFloatingText (amt.ToString (), textPos , txtColor, 30, SpawnParticles.instance.mainCanvas);
+		ft.SetFloatingText (amt.ToString (), textPos , txtColor, 30, SpawnParticles.instance.mainCanvas, crit);
 
 		currentHealth -= amt;
 		if (currentHealth > 0) {

@@ -16,7 +16,8 @@ public class PlayerMove : MonoBehaviour {
 	public GameObject floatingTextPrefab;
 	[HideInInspector] public GameObject target;
 
-	public List<Attack> attacks;
+    public List<_Attack> attackList;
+	public List<AttackBehavior> attacks;
 	private Rigidbody rb;
 	private bool isMoving = true;
 	private bool isFighting = false;
@@ -26,15 +27,10 @@ public class PlayerMove : MonoBehaviour {
 		PM = this;
 		currentHealth = maxHealth;
 		rb = GetComponent <Rigidbody> ();
-		attacks = new List<Attack> ();
-		// Create basic attack
-		Attack a = new Attack();
-		a.attackLevel = 1;
-		a.attackDelay = 2;
-		a.damageType = Element.Basic;
-		a.damageAmount = .8f;
-		a.damageMultiplier = 1.2f;
-		attacks.Add (a);
+		attacks = new List<AttackBehavior> ();
+        // Create basic attack
+        attacks.Add(new AttackBehavior(attackList[0]));
+
 		// Create first monster plane
 		Instantiate (planePrefab, prevPlane.transform.position + Vector3.forward * 60f, Quaternion.identity);
 	}
@@ -62,18 +58,21 @@ public class PlayerMove : MonoBehaviour {
 			for (int i = 0; i < attacks.Count; i++) {
 				attacks [i].timer += Time.deltaTime;
 				if (i > 0) {
-					ConvertEssence.CE.meters [(int)attacks[i].damageType].attackTimer.fillAmount = attacks [i].timer / attacks [i].attackDelay;
+					ConvertEssence.CE.meters [(int)attacks[i].data.damageType].attackTimer.fillAmount = attacks [i].timer / attacks [i].data.attackDelay;
 				}
-				if (attacks [i].timer >= attacks [i].attackDelay) {
+				if (attacks [i].timer >= attacks [i].data.attackDelay) {
 					float multiplier = Damage.instance.GetDamageMultiplier (
-						attacks[i].damageType,
+						attacks[i].data.damageType,
 						e.myElement
 					);
-					Destroy (Instantiate (elementAttackPrefabs[(int)attacks[i].damageType], target.transform.position, Quaternion.identity), 3f);
-					e.TakeDamage (attacks [i].damageAmount * multiplier, attacks[i].damageType);
-					attacks [i].timer -= attacks [i].attackDelay;
+					Destroy (Instantiate (elementAttackPrefabs[(int)attacks[i].data.damageType], target.transform.position, Quaternion.identity), 3f);
+
+                    // <--------------
+                    bool crit;
+                    e.TakeDamage(attacks[i].DamageRoll(out crit), attacks[i].data.damageType, crit);
+					attacks [i].timer -= attacks [i].data.attackDelay;
 					if (i > 0) {
-						ConvertEssence.CE.meters [(int)attacks[i].damageType].attackTimer.fillAmount = attacks [i].timer / attacks [i].attackDelay;
+						ConvertEssence.CE.meters [(int)attacks[i].data.damageType].attackTimer.fillAmount = attacks [i].timer / attacks [i].data.attackDelay;
 					}
 
 					if (target == null) {
@@ -106,33 +105,35 @@ public class PlayerMove : MonoBehaviour {
 		isFighting = true;
 	}
 
+    public AttackBehavior AttackCheck(int type, out bool exists)
+    {
+        AttackBehavior attack = null;
+        exists = false;
+        for (int i = 0; i < attacks.Count; i++)
+        {
+            if ((int)attacks[i].data.damageType == type)
+            {
+                attack = attacks[i];
+                exists = true;
+            }
+        }
+        if (attack == null)
+        {
+            attack = new AttackBehavior(attackList[type]);
+        }
+
+        return attack;
+    }
+
+
 	public void AddUpgrade(int idx) {
-		bool found = false;
-		Attack a;
+		bool found;
+        AttackBehavior attack = AttackCheck(idx, out found);
 
-		for (int i = 0; i < attacks.Count; i++) {
-			if ((int)attacks [i].damageType == idx) {
-				a = attacks [i];
-				a.attackLevel += 1;
-				a.damageAmount = a.attackLevel * a.damageMultiplier;
-				attacks [i] = a;
-				if (i == 0) {
-					maxHealth += 10;
-					healthRegen += .2f;
-				}
-				found = true;
-				break;
-			}
-		}
-
-		if (! found) {
-			a = new Attack();
-			a.attackDelay = Random.Range (20f, 80f);
-			a.damageType = (Element)idx;
-			a.damageAmount = Random.Range (3f, 8f);
-			a.damageMultiplier = Random.Range (1.3f, 2.5f);
-			attacks.Add (a);
-		}
+        if (found)
+            attack.attackLevel += 1;
+        else
+            attacks.Add(attack);
 	}
 
 	public void TakeDamage(float amt) {
@@ -145,7 +146,7 @@ public class PlayerMove : MonoBehaviour {
 		FloatingText ft = go.GetComponent<FloatingText> ();
 		Vector3 textPos = transform.position;
 		textPos.x += Random.Range (-5f, 5f);
-		ft.SetFloatingText (amt.ToString (), textPos , Color.grey, 30, SpawnParticles.instance.mainCanvas);
+        ft.SetFloatingText(amt.ToString(), textPos, Color.grey, 30, SpawnParticles.instance.mainCanvas, false);
 	}
 
 	public void AddHealth(float amt) {

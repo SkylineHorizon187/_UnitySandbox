@@ -11,14 +11,23 @@ public class FloatingText : MonoBehaviour {
 	private bool isSet = false;
 	private RectTransform rt;
 
-	public void SetFloatingText(string text, Vector3 position, Color color, int size, Transform canvas) {
+	public void SetFloatingText(string text, Vector3 position, Color color, int size, Transform canvas, bool crit) {
 		transform.SetParent (canvas);
 		transform.position = Camera.main.WorldToScreenPoint (position);
 
 		TextMeshProUGUI txtcomp = GetComponent<TextMeshProUGUI> ();
-		txtcomp.SetText (text);
+
+        if (crit)
+        {
+            size += 10;
+            text += '!';
+        }
+
+        txtcomp.SetText (text);
 		txtcomp.faceColor = color;
 		txtcomp.fontSize = size;
+
+        
 
 		isSet = true;
 	}

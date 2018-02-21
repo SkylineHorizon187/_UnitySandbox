@@ -18,7 +18,7 @@ public class PlaneSetup : MonoBehaviour {
 				GameObject monster = Instantiate (monsterPrefab, movePoints[i].position, Quaternion.identity);
 				Enemy e = monster.GetComponent<Enemy> ();
 				e.myLevel = Global.instance.monsterLevel;
-				e.myHealth = 10 * Global.instance.monsterLevel;
+				e.myHealth = 20f + 10f * Global.instance.monsterLevel;
 				e.healthBar.fillAmount = 1;
 				e.myAttackSpeed = 5;
 				e.myAttackDamage = 1.5f * Global.instance.monsterLevel;
