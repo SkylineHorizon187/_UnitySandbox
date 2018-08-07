@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour {
     [Range(1,24)]
@@ -9,32 +10,47 @@ public class GameControl : MonoBehaviour {
     public GameObject floorPrefab, pathGO;
     public Material Barrier, Grass, Enter, Exit;
     public List<Node> StartToExitPath;
-    public GameObject WayPointPrefab;
+    public GameObject WayPointPrefab, PathBlockerPrefab;
+    public int GameState = 0;
+    public Image helpIcon;
+    public TextMeshProUGUI helpText;
+    public Sprite flagSprite, brickSprite, defenseSprite;
+    public GameObject floorTileHolder;
 
-    private GameObject[,] floorTiles;
+    public GameObject[,] floorTiles;
     private GameObject prevTile, startTile, exitTile, prevStartTile, prevExitTile;
-    private Color highlite, prevColor;
+    private Color prevColor;
     private Ray ray;
     private RaycastHit hit;
-    private LayerMask mask;
-    private Vector2Int startPos, exitPos;
+    public LayerMask mask;
+    public Vector2Int startPos, exitPos;
     private Node[,] mainGraph, tempGraph;
-    private GameObject WP1, WP2;
+    public GameObject WP1, WP2;
+    private int prevGameState = -1;
+    
+    public Vector3 SpawnPosition()
+    {
+        return floorTiles[startPos.x, startPos.y].transform.position;
+    }
+    public Vector3 TilePosition(int x, int y)
+    {
+        return floorTiles[x, y].transform.position;
+    }
 
     void Start () {
         // initialize
         floorTiles = new GameObject[(floorX+2), (floorY+2)];
         startPos = Vector2Int.zero;
         exitPos = Vector2Int.zero;
-        highlite = Color.blue;
         mask = 1 << 10;
+        Random.InitState(Music.NameSeed);
 
         // build map
         for (int i = 0; i < floorX; i++)
         {
             for (int j = 0; j < floorY; j++)
             {
-                floorTiles[i,j] = Instantiate(floorPrefab, new Vector3(-floorX / 2 + i, 0, -floorY / 2 + j), Quaternion.Euler(90, 0, 0), transform);
+                floorTiles[i,j] = Instantiate(floorPrefab, new Vector3(-floorX / 2 + i, 0, -floorY / 2 + j), Quaternion.Euler(90, 0, 0), floorTileHolder.transform);
                 tileData td = floorTiles[i, j].GetComponent<tileData>();
 
                 td.tileX = i;
@@ -59,79 +75,30 @@ public class GameControl : MonoBehaviour {
     }
 
     void Update () {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100, mask)) {
-            tileData td = hit.collider.gameObject.GetComponent<tileData>();
-
-            if (td != null && td.isWalkable && td.isPlaceable)
+        if (GameState != prevGameState)
+        {
+            switch (GameState)
             {
-                if (prevTile != null)
-                {
-                    prevTile.GetComponent<Renderer>().material.color = prevColor;
-                }
-                prevTile = hit.collider.gameObject;
-                prevColor = prevTile.GetComponent<Renderer>().material.color;
-
-                // create new graph with this tile marked as unwalkable,
-                // then see if we still have a valid path
-                prevTile.GetComponent<tileData>().isWalkable = false;
-                GeneratePathfindingGraph(out tempGraph);
-                StartToExitPath = GeneratePathFromTo(tempGraph, startPos, exitPos);
-                if (StartToExitPath != null)
-                {
-                    prevTile.GetComponent<Renderer>().material.color = highlite;
-                } else
-                {
-                    prevTile.GetComponent<Renderer>().material.color = Color.red;
-                }
-                prevTile.GetComponent<tileData>().isWalkable = true;
-
-                // Add unwalkable area
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (prevTile.GetComponent<Renderer>().material.color == highlite)
-                    {
-                        prevTile.GetComponent<Renderer>().material = Barrier;
-                        prevTile.GetComponent<tileData>().isWalkable = false;
-                        PathFinder(true, true, true);
-                    }
-                }
-
-                // Add waypoint
-                if (Input.GetMouseButtonDown(1))
-                {
-                    if (WP1 == null || WP2 == null)
-                    {
-                        if (prevTile.GetComponent<Renderer>().material.color == highlite)
-                        {
-                            if (WP1 == null)
-                            {
-                                WP1 = Instantiate(WayPointPrefab, prevTile.transform.position, Quaternion.identity);
-                                WP1.transform.GetChild(0).GetComponent<TextMeshPro>().text = "1";
-
-                                WayPoint wp = WP1.GetComponent<WayPoint>();
-                                tileData ntd = prevTile.GetComponent<tileData>();
-                                wp.boardX = ntd.tileX;
-                                wp.boardY = ntd.tileY;
-                                
-                            }
-                            else if (WP2 == null)
-                            {
-                                WP2 = Instantiate(WayPointPrefab, prevTile.transform.position, Quaternion.identity);
-                                WP2.transform.GetChild(0).GetComponent<TextMeshPro>().text = "2";
-
-                                WayPoint wp = WP2.GetComponent<WayPoint>();
-                                tileData ntd = prevTile.GetComponent<tileData>();
-                                wp.boardX = ntd.tileX;
-                                wp.boardY = ntd.tileY;
-                            }
-                            prevTile.GetComponent<tileData>().isPlaceable = false;
-                            prevTile.GetComponent<Renderer>().material.color = prevColor;
-                            PathFinder(true, true, true);
-                        }
-                    }
-                }
+                case 0:
+                    helpIcon.sprite = flagSprite;
+                    helpText.text = "Place 2 waypoints for monsters to visit before exiting.";
+                    GetComponent<PlaceFlag>().enabled = true;
+                    break;
+                case 1:
+                    helpIcon.sprite = brickSprite;
+                    helpText.text = "Place pathing bricks.";
+                    GetComponent<PlaceBricks>().enabled = true;
+                    break;
+                case 2:
+                    helpIcon.sprite = defenseSprite;
+                    helpText.text = "Build defenses!  Click on a pathing brick to access the build menu.";
+                    GetComponent<PlaceDefense>().enabled = true;
+                    break;
+                default:
+                    break;
             }
+
+            prevGameState = GameState;
         }
 	}
 
@@ -182,7 +149,7 @@ public class GameControl : MonoBehaviour {
         PathFinder(true, true, true);
     }
 
-    private void PathFinder(bool GenerateGraph, bool GeneratePath, bool ShowPath)
+    public void PathFinder(bool GenerateGraph, bool GeneratePath, bool ShowPath)
     {
         if (GenerateGraph)
         {
@@ -212,7 +179,7 @@ public class GameControl : MonoBehaviour {
         }
     }
 
-    private void GeneratePathfindingGraph(out Node[,] graph)
+    public void GeneratePathfindingGraph(out Node[,] graph)
     {
         // Initialize the array
         graph = new Node[floorX, floorY];
