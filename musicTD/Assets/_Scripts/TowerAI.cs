@@ -5,25 +5,37 @@ using UnityEngine;
 public class TowerAI : MonoBehaviour {
 
     public LayerMask UnitLayer;
-    [Range(1f, 3f)] public float TowerRange;
+    [Range(3f, 6f)] public float TowerRange;
     public float fireRate;
     public GameObject bulletPrefab;
     public GameObject firePos;
     public float bulletDamage;
     public float bulletSpeed;
+    public GameObject rangeDisplay;
+    public cakeslice.Outline outlineScript;
 
     private GameObject Target;
     private Collider[] UnitColliders;
 
-	void Start () {
+    void Start () {
+        rangeDisplay.transform.localScale = new Vector3(TowerRange, TowerRange, 1f);
+        rangeDisplay.SetActive(false);
+        SelectUnit(false);
         InvokeRepeating("FireOnTarget", .2f, fireRate);	
 	}
-	
-	void FireOnTarget()
+
+    public void SelectUnit(bool tf)
+    {
+        outlineScript.enabled = tf;
+        rangeDisplay.SetActive(tf);
+    }
+
+    void FireOnTarget()
     {
         if (Target == null || Vector3.Distance(transform.position, Target.transform.position) > TowerRange)
         {
-            UnitColliders = Physics.OverlapSphere(transform.position, TowerRange, UnitLayer);
+            Target = null;
+            UnitColliders = Physics.OverlapSphere(transform.position, TowerRange/2, UnitLayer);
             float closeDist = Mathf.Infinity;
             foreach (Collider c in UnitColliders)
             {
