@@ -47,7 +47,6 @@ public class BrickHilite : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-
     void Start () {
         myOutline = GetComponent<cakeslice.Outline>();
 	}

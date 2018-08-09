@@ -283,7 +283,7 @@ MonoBehaviour:
   healthBar: {fileID: 114368161358708040}
   SpeedGradient:
     serializedVersion: 2
-    key0: {r: 0.52154374, g: 0, b: 0.6509804, a: 1}
+    key0: {r: 0, g: 0.04734018, b: 0.46226418, a: 1}
     key1: {r: 0, g: 1, b: 1, a: 1}
     key2: {r: 1, g: 1, b: 1, a: 0}
     key3: {r: 1, g: 1, b: 1, a: 0}
@@ -292,7 +292,7 @@ MonoBehaviour:
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 47417
+    ctime1: 43562
     ctime2: 64957
     ctime3: 64957
     ctime4: 0

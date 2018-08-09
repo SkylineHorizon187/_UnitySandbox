@@ -48,7 +48,7 @@ public class PlaceFlag : MonoBehaviour {
                     StartToExitPath = GC.GeneratePathFromTo(tempGraph, GC.startPos, GC.exitPos);
                     if (StartToExitPath != null)
                     {
-                        prevTile.GetComponent<Renderer>().material.color = Color.blue;
+                        prevTile.GetComponent<Renderer>().material.color = Color.gray;
                     }
                     else
                     {
@@ -59,7 +59,7 @@ public class PlaceFlag : MonoBehaviour {
                     // Add waypoint
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (prevTile.GetComponent<Renderer>().material.color == Color.blue)
+                        if (prevTile.GetComponent<Renderer>().material.color == Color.gray)
                         {
                             if (GC.WP1 == null)
                             {

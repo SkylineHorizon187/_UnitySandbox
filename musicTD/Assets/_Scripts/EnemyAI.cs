@@ -31,11 +31,11 @@ public class EnemyAI : MonoBehaviour {
         // Unit apperance
         // scale dependant on health
         Vector3 fat = transform.GetChild(0).localScale;
-        fat.x += UnitHealth / 100;
-        fat.z += UnitHealth / 100;
+        fat.x += UnitHealth / 125;
+        fat.z += UnitHealth / 125;
         transform.GetChild(0).localScale = fat;
         // color dependant on speed
-        transform.GetChild(0).GetComponent<MeshRenderer>().material.color = SpeedGradient.Evaluate(Mathf.Clamp01(UnitSpeed / 1.5f));
+        transform.GetChild(0).GetComponent<MeshRenderer>().material.color = SpeedGradient.Evaluate(Mathf.Clamp01(UnitSpeed-1));
 	}
 	
 	void Update () {
@@ -72,7 +72,7 @@ public class EnemyAI : MonoBehaviour {
     
     public void TakeDamage(float amount)
     {
-        UnitHealth -= amount;
+        UnitHealth -= amount - (amount * UnitResistance);
         healthBar.fillAmount = UnitHealth / StartHealth;
 
         if (UnitHealth <= 0)

@@ -9,20 +9,11 @@ public class PlaceDefense : MonoBehaviour {
     public GameObject pathBlockerHolder;
     public GameObject selectedBrick;
 
-    private Ray ray;
-    private RaycastHit hit;
-    private LayerMask mask = 1 << 12;
-
     void Start () {
         PD = this;
         selectedBrick = new GameObject();
     }
 	
-	void Update () {
-        if (Menu.buildMenu.isOpen) return;
-
-    }
-
     public void UpgradeTo(int building)
     {
         Instantiate(buildingPrefabs[building - 1], selectedBrick.transform.position, Quaternion.identity, selectedBrick.transform);

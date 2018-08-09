@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4673154592328450}
   - component: {fileID: 33115937378692292}
   - component: {fileID: 23690604968722438}
-  - component: {fileID: 64981149672904064}
   m_Layer: 12
   m_Name: Quad
   m_TagString: Untagged
@@ -217,20 +216,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1818750886579688}
   m_Mesh: {fileID: 4300016, guid: dad72196536931e47a8fbc35fcb63d68, type: 3}
---- !u!64 &64981149672904064
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1421580238683378}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114679673115118356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,8 +230,8 @@ MonoBehaviour:
   UnitLayer:
     serializedVersion: 2
     m_Bits: 2048
-  TowerRange: 5
-  fireRate: 2
+  TowerRange: 3
+  fireRate: 3
   bulletPrefab: {fileID: 1491841430846298, guid: 9311d1688f593754abc15c9b0f6a70e1,
     type: 2}
   firePos: {fileID: 1583525274394518}

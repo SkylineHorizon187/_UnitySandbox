@@ -56,7 +56,7 @@ public class PlaceBricks : MonoBehaviour {
                     StartToExitPath = GC.GeneratePathFromTo(tempGraph, GC.startPos, GC.exitPos);
                     if (StartToExitPath != null)
                     {
-                        prevTile.GetComponent<Renderer>().material.color = Color.blue;
+                        prevTile.GetComponent<Renderer>().material.color = Color.green;
                     }
                     else
                     {
@@ -67,7 +67,7 @@ public class PlaceBricks : MonoBehaviour {
                     // Add path blocker
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (prevTile.GetComponent<Renderer>().material.color == Color.blue)
+                        if (prevTile.GetComponent<Renderer>().material.color == Color.green)
                         {
                             Instantiate(brickPrefab, GC.floorTiles[td.tileX, td.tileY].transform.position, Quaternion.identity, pathBlockerHolder.transform);
 
