@@ -16,6 +16,16 @@ public class PlaceDefense : MonoBehaviour {
 	
     public void UpgradeTo(int building)
     {
-        Instantiate(buildingPrefabs[building - 1], selectedBrick.transform.position, Quaternion.identity, selectedBrick.transform);
+        if (selectedBrick.transform.childCount > 1)
+        {
+            // Destroy the old building that was here
+            Destroy(selectedBrick.transform.GetChild(1).gameObject);
+
+        }
+        // Place new building (if needed)
+        if (building > -1)
+        {
+            Instantiate(buildingPrefabs[building - 1], selectedBrick.transform.position, Quaternion.identity, selectedBrick.transform);
+        }
     }
 }

@@ -11,7 +11,7 @@ public class MusicAnalyzer : MonoBehaviour {
         public float lowVal;
         public float highVal;
     }
-
+    [Range(1f,3f)] public float sensitivity;
     public int nSamples = 1024;
     [SerializeField]
     public Ranges[] freqRanges;
@@ -59,14 +59,17 @@ public class MusicAnalyzer : MonoBehaviour {
                 }
             }
 
-            if (unitData[0] > 2f)
+            if (unitData[0] > sensitivity)
             {
+                float buff = 3f / sensitivity * .625f;
+
+                for (int j = 0; j < unitData.Length; j++)
+                    unitData[j] *= buff;
+
                 M.SpawnEnemyUnit(unitData);
 
                 for (int j = 0; j < unitData.Length; j++)
-                {
                     unitData[j] = 0;
-                }
             }
         }
     }

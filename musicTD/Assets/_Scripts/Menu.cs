@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
     public float radius;
     public GameObject spokePrefab;
     public GameObject[] menuButtons;
-    public int[] activeButtons;
+    public List<int> activeButtons;
     public GameObject closeButton;
     public float OpenCloseTime = 1f;
 
@@ -27,6 +27,7 @@ public class Menu : MonoBehaviour
 
         spokeHolder = transform.GetChild(0);
         buttons = new List<GameObject>();
+        activeButtons = new List<int>();
         spokes = new List<GameObject>();
         CoRoutines = new List<Coroutine>();
 
@@ -54,12 +55,12 @@ public class Menu : MonoBehaviour
         gameObject.SetActive(true);
 
         transform.position = menuPos;
-        float ang = 270f / activeButtons.Length;
+        float ang = 270f / activeButtons.Count;
         float offset = 225f + ang / 2;
         buttons.Clear();
         spokes.Clear();
 
-        for (int i = 0; i < activeButtons.Length; i++)
+        for (int i = 0; i < activeButtons.Count; i++)
         {
             // build a spoke
             spokes.Add(Instantiate(spokePrefab, transform.position, Quaternion.Euler(0, 0, offset + ang * i), spokeHolder));

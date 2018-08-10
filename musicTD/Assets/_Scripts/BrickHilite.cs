@@ -13,6 +13,17 @@ public class BrickHilite : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             PlaceDefense.PD.selectedBrick = gameObject.transform.parent.gameObject;
+            if (PlaceDefense.PD.selectedBrick.transform.childCount < 2)
+            {
+                Menu.buildMenu.activeButtons.Clear();
+                Menu.buildMenu.activeButtons.Add(0);
+                Menu.buildMenu.activeButtons.Add(1);
+            } else
+            {
+                Menu.buildMenu.activeButtons.Clear();
+                Menu.buildMenu.activeButtons.Add(2);
+                Menu.buildMenu.activeButtons.Add(3);
+            }
             Menu.buildMenu.MenuOpen(eventData.position);
         }
     }

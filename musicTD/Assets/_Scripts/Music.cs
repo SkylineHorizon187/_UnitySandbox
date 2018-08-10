@@ -37,9 +37,9 @@ public class Music : MonoBehaviour {
         GameObject Enemy = Instantiate(EnemyPrefab, spawnPos, Quaternion.identity);
         EnemyAI AI = Enemy.GetComponent<EnemyAI>();
         AI.UnitHealth = unitData[1];
-        AI.UnitSpeed = unitData[2] / 10;
-        AI.UnitTurnRate = unitData[3];
-        AI.UnitResistance = unitData[4] / 20;
+        AI.UnitSpeed = unitData[2] / 9;
+        AI.UnitTurnRate = unitData[3] / 2;
+        AI.UnitResistance = unitData[4] / 25;
     }
 
     public void StartStopMusic()

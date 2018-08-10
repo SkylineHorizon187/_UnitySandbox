@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 1803158832802132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4162115035851442}
   - {fileID: 4316795520093514}
@@ -246,11 +246,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   TowerRange: 2
-  fireRate: 1
+  fireRate: 0.75
   bulletPrefab: {fileID: 1491841430846298, guid: 7ead07d7038bc0d4b869d43c7e32099c,
     type: 2}
   firePos: {fileID: 1583525274394518}
-  bulletDamage: 2
+  bulletDamage: 3
   bulletSpeed: 10
   rangeDisplay: {fileID: 1399423186456234}
   outlineScript: {fileID: 114408344618099754}
