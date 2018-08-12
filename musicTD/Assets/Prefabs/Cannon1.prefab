@@ -230,6 +230,7 @@ MonoBehaviour:
   UnitLayer:
     serializedVersion: 2
     m_Bits: 2048
+  TowerName: Cannon1
   TowerRange: 3
   fireRate: 3
   bulletPrefab: {fileID: 1491841430846298, guid: 9311d1688f593754abc15c9b0f6a70e1,

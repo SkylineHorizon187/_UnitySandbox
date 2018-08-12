@@ -8,6 +8,7 @@ public class PlaceBricks : MonoBehaviour {
     public GameObject brickPrefab;
     public TextMeshProUGUI helpText;
     public GameObject pathBlockerHolder;
+    public GameObject UnitInfoWindow;
 
     private Ray ray;
     private RaycastHit hit;
@@ -69,7 +70,8 @@ public class PlaceBricks : MonoBehaviour {
                     {
                         if (prevTile.GetComponent<Renderer>().material.color == Color.green)
                         {
-                            Instantiate(brickPrefab, GC.floorTiles[td.tileX, td.tileY].transform.position, Quaternion.identity, pathBlockerHolder.transform);
+                            GameObject brick = Instantiate(brickPrefab, GC.floorTiles[td.tileX, td.tileY].transform.position, Quaternion.identity, pathBlockerHolder.transform);
+                            brick.transform.GetChild(0).GetComponent<BrickHilite>().towerInfo = UnitInfoWindow;
 
                             prevTile.GetComponent<tileData>().isWalkable = false;
                             prevTile.GetComponent<Renderer>().material = GC.Barrier;

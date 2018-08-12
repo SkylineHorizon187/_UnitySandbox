@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerAI : MonoBehaviour {
 
     public LayerMask UnitLayer;
+    public string TowerName;
     [Range(1f, 5f)] public float TowerRange;
     public float fireRate;
     public GameObject bulletPrefab;

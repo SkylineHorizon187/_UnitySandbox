@@ -245,6 +245,7 @@ MonoBehaviour:
   UnitLayer:
     serializedVersion: 2
     m_Bits: 2048
+  TowerName: Gun1
   TowerRange: 2
   fireRate: 0.75
   bulletPrefab: {fileID: 1491841430846298, guid: 7ead07d7038bc0d4b869d43c7e32099c,
