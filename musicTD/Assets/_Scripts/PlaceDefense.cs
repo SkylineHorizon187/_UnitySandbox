@@ -7,6 +7,7 @@ public class PlaceDefense : MonoBehaviour {
     public static PlaceDefense PD;
     public GameObject[] buildingPrefabs;
     public GameObject pathBlockerHolder;
+    [HideInInspector]
     public GameObject selectedBrick;
 
     void Start () {
