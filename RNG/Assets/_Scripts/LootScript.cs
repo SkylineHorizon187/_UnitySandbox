@@ -5,14 +5,23 @@ using UnityEngine;
 public class LootScript : MonoBehaviour {
 
     public List<LootItem> LootTable = new List<LootItem>();
+    public List<LootRarityTint> ColorTable = new List<LootRarityTint>();
+
     private int dropWeight;
+    private int rarityWeight;
 
 	void Start () {
         dropWeight = 0;
         for (int i = 0; i < LootTable.Count; i++)
         {
             dropWeight += LootTable[i].dropRarity;
-        }		
+        }
+
+        rarityWeight = 0;
+        for (int i = 0; i < ColorTable.Count; i++)
+        {
+            rarityWeight += ColorTable[i].dropRarity;
+        }
 	}
 	
     public LootItem GetLoot()
@@ -37,5 +46,22 @@ public class LootScript : MonoBehaviour {
             return GetLoot();
         }
         return null;
+    }
+
+    public Color GetRarity()
+    {
+        Color c = Color.white;
+        int rarityChance = Random.Range(0, rarityWeight);
+
+        for (int i = 0; i < ColorTable.Count; i++)
+        {
+            if (rarityChance < ColorTable[i].dropRarity)
+            {
+                c = ColorTable[i].Tint;
+                break;
+            }
+            rarityChance -= ColorTable[i].dropRarity;
+        }
+        return c;
     }
 }

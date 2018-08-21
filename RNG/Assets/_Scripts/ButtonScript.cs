@@ -1,42 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour {
 
     public LootScript LS;
-    public GameObject OutputTextGameobject;
+    public int LootDrops;
+    public int DropPercent;
+    public bool LootExplosion;
+    public float Force;
 
-    private List<Text> Outs = new List<Text>();
-    private Text oneText;
-
-    private void Start()
-    {
-        for (int i = 0; i < OutputTextGameobject.transform.childCount; i++)
-        {
-            oneText = OutputTextGameobject.transform.GetChild(i).GetComponent<Text>();
-            if (oneText != null)
-            {
-                Outs.Add(oneText);
-            }
-        }   
-    }
+    private GameObject go;
 
     public void GetRandomLoot()
     {
         LootItem li;
 
-        for (int i = 0; i < Outs.Count; i++)
+        for (int i = 0; i < LootDrops; i++)
         {
-            li = LS.GetLoot(70);
-            if (li == null)
+            li = LS.GetLoot(DropPercent);
+            if (li != null)
             {
-                Outs[i].text = "No Loot";
-            }
-            else
-            {
-                Outs[i].text = li.Name;
+                go = Instantiate(li.Item, Vector3.zero, Quaternion.identity);
+                go.GetComponent<Renderer>().material.color = LS.GetRarity();
+
+                if (LootExplosion)
+                {
+                    Vector2 inCircle = Random.insideUnitCircle;
+                    Vector3 Dir = new Vector3(inCircle.x/4, 1, inCircle.y/4);
+
+                    go.GetComponent<Rigidbody>().AddForce(Dir * Force, ForceMode.Impulse);
+                }
             }
         }
     }

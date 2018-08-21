@@ -35,7 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - LootLayer
   - 
   m_SortingLayers:
   - name: Default
