@@ -29,7 +29,7 @@ public class ButtonScript : MonoBehaviour {
 
         for (int i = 0; i < Outs.Count; i++)
         {
-            li = LS.GetLoot();
+            li = LS.GetLoot(70);
             if (li == null)
             {
                 Outs[i].text = "No Loot";

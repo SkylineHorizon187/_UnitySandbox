@@ -34,16 +34,7 @@ public class LootScript : MonoBehaviour {
     {
         if (Random.Range(0, 101) < PercentChance)
         {
-            int dropChance = Random.Range(0, dropWeight);
-
-            for (int i = 0; i < LootTable.Count; i++)
-            {
-                if (dropChance < LootTable[i].dropRarity)
-                {
-                    return LootTable[i];
-                }
-                dropChance -= LootTable[i].dropRarity;
-            }
+            return GetLoot();
         }
         return null;
     }
