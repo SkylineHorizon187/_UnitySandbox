@@ -27,7 +27,8 @@ sysinfo.txt
 *.userprefs
 *.pidb
 .DS_Store
-.mp3
+*.mp3
+*.mp3.meta
 
 ###
 # OS generated
